@@ -1,0 +1,28 @@
+group "io.github.rotn"
+version "1.0.0.0"
+
+file "build.properties" withReader{
+    def props = new Properties()
+    props.load(it)
+    ext.config = new ConfigSlurper().parse props
+}
+
+apply plugin: "idea"
+apply plugin: "java"
+
+targetCompatibility = 1.8
+sourceCompatibility = 1.8
+
+repositories{
+    mavenCentral()
+    jcenter()
+}
+
+dependencies{
+    testCompile "junit:junit:4.12"
+
+    compile "com.sparkjava:spark-core:${config.spark.version}"
+    compile "org.slf4j:slf4j-simple:${config.slf4j.version}"
+    compile "com.google.inject:guice:${config.guice.version}"
+    compile "com.google.code.gson:gson:${config.gson.version}"
+}
